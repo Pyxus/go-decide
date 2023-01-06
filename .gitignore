@@ -16,7 +16,7 @@ mono_crash.*.json
 
 # Project-specific
 /addons/*
-!/addons/udecide
+!/addons/go_decide
 /demos
 /test
 *.import
