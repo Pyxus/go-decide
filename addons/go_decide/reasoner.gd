@@ -1,3 +1,4 @@
+class_name Reasoner
 extends RefCounted
 
 const _Bucket = preload("bucket.gd")
@@ -10,16 +11,26 @@ var _action_by_name: Dictionary
 var _bucket_by_name: Dictionary
 
 
-func make_decision(context: Dictionary) -> void:
+func decide(context: Dictionary) -> Action:
 	var buckets = _bucket_by_name.values().sort_custom(
 		func(a: _Bucket, b: _Bucket):
 			return a.weight < b.weight
 	)
 
 	for bucket in buckets:
-		for action_name in bucket.actions:
-			var action: Action = _action_by_name[action_name]
-		pass
+		bucket.update_action_utility()
+		var actions: Array[Action] = bucket.actions.filter(func(action): return action.cached_utility == 0.0)
+		var sum_utility: float = actions.reduce(func(action): return action.cached_utility)
+		var rand_num := randf_range(0, sum_utility)
+
+		for action in actions:
+			rand_num -= action.cached_utility
+
+			if rand_num <= 0:
+				return action
+
+	return null
+		
 
 func add_action(action_name: StringName, action: Action, buckets: Array[StringName] = _EMPTY_STRING_NAME_ARRAY) -> void:
 	if _action_by_name.has(action_name):

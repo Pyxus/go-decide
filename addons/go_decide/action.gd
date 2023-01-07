@@ -8,13 +8,12 @@ var probability: float = 1.0:
 var weight: float = 1.0
 var evaluator := Evaluator.new()
 var considerations: Array[Consideration]
-var name: StringName
+var cached_utility: float = 0.0
 
 # Type: () -> void
 var execute: Callable
 
-func _init(name: StringName, considerations: Array[Consideration], execute: Callable) -> void:
-    self.name = name
+func _init(considerations: Array[Consideration], execute: Callable) -> void:
     self.considerations = considerations
     self.execute = execute
 
@@ -27,4 +26,5 @@ func calc_utility(context: Dictionary) -> float:
     for consideration in considerations:
         sum_score += evaluator.evaluate(consideration.score(context))
     
-    return (sum_score / considerations.size()) * clampf(probability, 0, 1) * weight
+    cached_utility = (sum_score / considerations.size()) * clampf(probability, 0, 1) * weight
+    return cached_utility
