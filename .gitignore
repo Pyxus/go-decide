@@ -19,7 +19,6 @@ mono_crash.*.json
 !/addons/go_decide
 /demos
 /test
-*.import
 project.godot
 /default_env.tres
 /.vscode

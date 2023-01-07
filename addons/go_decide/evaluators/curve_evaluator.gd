@@ -1,7 +1,9 @@
+class_name CurveEvaluator
 extends "evaluator.gd"
 
+## If true uses the curve's baked sample for evaluation
 @export var use_baked: bool = true
-@export var curve: Curve
+@export var curve := Curve.new()
 
 func evaluate_impl(score: float) -> float:
     return (
