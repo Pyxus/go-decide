@@ -2,9 +2,23 @@
 class_name Evaluator
 extends Resource
 
-func evaluate(value: float) -> float:
-    return evaluate_impl(value)
+@export var invert: bool:
+    set(value):
+        invert = value
+        _invert_updated()
+
+func evaluate(input: float) -> float:
+    var evaluation := _evaluate_impl(input)
+    if evaluation < 0 or evaluation > 1:
+        push_warning("Evaluations should be normalized from 0 to 1.")
+
+    return 1 - _evaluate_impl(input) if invert else _evaluate_impl(input)
 
 
-func evaluate_impl(value: float) -> float:
-    return value
+func _evaluate_impl(input: float) -> float:
+    push_warning("Method unimplemented")
+    return input
+
+
+func _invert_updated() -> void:
+    pass

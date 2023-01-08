@@ -1,5 +1,6 @@
 class_name Reasoner
-extends RefCounted
+extends Node
+
 
 var _action_groups: Array[ActionGroup]
 

@@ -1,19 +1,19 @@
 @tool
 class_name Consideration
-extends Resource
+extends Node
 ## Abstract base class of all considerations
 ##
 ## Represents a decision factor which encapsulates one aspect of a larger decision.
+
+## The weight determines how heavily this consideration's score should factor in.[br]
+@export var weight: float = 1.0
 
 ## Evaluator used to map raw consideration value to desirability score.[br]
 ##
 ## For example, when considering health for a heal action
 ## the lower your health the more desireable it is to heal.
 ## Therefore the lower your health value the larger the evaluator's return value should be.
-@export var evaluator := CurveEvaluator.new() 
-
-## The weight determines how heavily this consideration's score should factor in.[br]
-@export var weight: float = 1.0
+@export var evaluator: Evaluator
 
 ## Returns the desireability score of this consideration.
 func score(context: Context) -> float:

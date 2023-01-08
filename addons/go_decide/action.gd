@@ -1,23 +1,26 @@
 class_name Action
-extends Resource
+extends Node
 ## Class representing a possible action the AI can take
 
-## Value ranging from 0 to 1 which represents how likely the action is to be successfully performed
-@export var probability: float = 1.0:
-	set(value):
-		probability = clampf(value, 0, 1)
 
 ## Weight used to adjust how desireable this action is.[br]
 ## Weight can be used to emulate personality. A high weight  will cause the AI to favor this action
 ## even if it does not have the most utility; the opposite is true for a low weight.
 @export var weight: float = 1.0
 
+## Value ranging from 0 to 1 which represents how likely the action is to be successfully performed
+@export var probability: float = 1.0:
+	set(value):
+		probability = clampf(value, 0, 1)
+
 ## List of considerations for this action.
-@export var considerations: Array[Consideration]
+var considerations: Array[Consideration]
+
+@export_multiline var description: String
 
 ## [b]Read Only.[/b] Value representing how desireable this action is.[br]
 ## This is a read only cached value that is updated whenever [method Action.calc_utility] is called.
-@export var utility: float = 0.0:
+var utility: float = 0.0:
 	get: return _utility
 	set(value): push_warning("This property is read only")
 

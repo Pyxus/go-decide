@@ -1,11 +1,11 @@
 class_name ActionGroup
-extends RefCounted
+extends Node
 
 ## List of actions belonging to this group
 var actions: Array[Action]
 
 ## Group weight. Groups with a higher weight are evaluated first by the [class Reasoner]
-var weight: float
+@export var weight: float
 
 
 func add_action(action: Action) -> void:
