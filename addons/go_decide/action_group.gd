@@ -13,7 +13,8 @@ func add_action(action: Action) -> void:
 
 
 func add_actions(actions: Array[Action]) -> void:
-    actions.append_array(actions)
+    for action in actions:
+        add_action(action)
 
 func update_action_utility(context: Context) -> void:
     for action in actions:

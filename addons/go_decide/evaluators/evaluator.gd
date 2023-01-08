@@ -1,9 +1,10 @@
+@tool
 class_name Evaluator
 extends Resource
 
-func evaluate(score: float) -> float:
-    return evaluate_impl(score)
+func evaluate(value: float) -> float:
+    return evaluate_impl(value)
 
 
-func evaluate_impl(score: float) -> float:
-    return score
+func evaluate_impl(value: float) -> float:
+    return value

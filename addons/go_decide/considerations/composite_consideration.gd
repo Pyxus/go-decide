@@ -7,7 +7,6 @@ extends Consideration
 var _root_wf: WeakRef
 var _considerations: Array[Consideration]
 
-
 func _score_impl(context: Context) -> float:
     if _considerations.is_empty():
         return 0.0
