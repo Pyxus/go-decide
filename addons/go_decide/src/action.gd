@@ -1,22 +1,29 @@
+@tool
 class_name Action
 extends Node
 ## Class representing a possible action the AI can take
 
+signal group_changed()
 
 ## Weight used to adjust how desireable this action is.[br]
-## Weight can be used to emulate personality. A high weight  will cause the AI to favor this action
-## even if it does not have the most utility; the opposite is true for a low weight.
+##
+## Modifying this value can contribute to personality emulation as it
+## affects how much the AI prefers an action regardless of Utility.
 @export var weight: float = 1.0
 
 ## Value ranging from 0 to 1 which represents how likely the action is to be successfully performed
-@export var probability: float = 1.0:
+@export_range(0, 1, .01) var probability: float = 1.0:
 	set(value):
 		probability = clampf(value, 0, 1)
 
-## List of considerations for this action.
-var considerations: Array[Consideration]
+@export var groups: PackedStringArray:
+	set(value):
+		groups = value
+		notify_property_list_changed()
 
-@export_multiline var description: String
+
+## Optional description of what the action does
+@export_multiline var description: String = ""
 
 ## [b]Read Only.[/b] Value representing how desireable this action is.[br]
 ## This is a read only cached value that is updated whenever [method Action.calc_utility] is called.
@@ -52,6 +59,7 @@ func set_considerations(considerations: Array[Consideration]) -> Action:
 
 ## Computes this action's utility.
 func calc_utility(context: Context) -> float:
+	var considerations := get_considerations()
 	if considerations.is_empty() or is_zero_approx(weight) or is_zero_approx(probability):
 		return 0.0
 	
@@ -59,11 +67,21 @@ func calc_utility(context: Context) -> float:
 	return _utility
 
 
+func get_considerations() -> Array[Consideration]:
+	var considerations: Array[Consideration]
+	
+	for node in get_children():
+		if node is Consideration:
+			considerations.append(node)
+	
+	return considerations
+
+
 func _considerations_weighted_avg(context: Context) -> float:
 	var sum_weight := 0.0
 	var sum_score := 0.0
 	
-	for c in considerations:
+	for c in get_considerations():
 		sum_weight += c.weight
 		sum_score += c.score(context) * c.weight
 	

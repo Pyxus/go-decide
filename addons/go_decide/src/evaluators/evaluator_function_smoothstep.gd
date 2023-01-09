@@ -5,7 +5,7 @@ extends EvaluatorFunction
 
 @export var a: float = 1:
 	set(value):
-		a = max(0.01, value)
+		a = value
 		_update_curve()
 
 

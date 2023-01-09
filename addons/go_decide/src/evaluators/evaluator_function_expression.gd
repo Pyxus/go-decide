@@ -23,7 +23,7 @@ func _init():
 	expression = expression
 
 
-func _get_property_list() -> Array:
+func _get_property_list() -> Array[Dictionary]:
 	var properties: Array = []
 	
 	var usage = PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_READ_ONLY
