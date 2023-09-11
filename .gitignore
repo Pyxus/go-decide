@@ -13,12 +13,3 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
-
-# Project-specific
-/addons/*
-!/addons/go_decide
-/demos
-/test
-project.godot
-/default_env.tres
-/.vscode
